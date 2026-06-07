@@ -1,0 +1,324 @@
+`html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>探索台灣 · 經典三大景點 | 台北101 · 中正紀念堂 · 西門町</title>
+    <!-- 清新風格，融入台灣意象，RWD 設計 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans TC', 'PingFang TC', 'Microsoft YaHei', sans-serif;
+            background-color: #fef9f0;
+            color: #2c2c2c;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 頁首英雄區塊 */
+        .hero {
+            background: linear-gradient(135deg, #2c5f8a 0%, #4a9fcf 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        .hero small {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        /* 景點卡片網格 */
+        .spots-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+            transition: transform 0.25s ease, box-shadow 0.3s;
+            flex: 1 1 300px;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(0px);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 40px -15px rgba(0,0,0,0.2);
+        }
+
+        /* 圖片區域 (使用純色模擬搭配 icon, 真實專案可替換實際圖片, 但我們用emoji+插圖風格) */
+        .card-img {
+            background-size: cover;
+            background-position: center;
+            height: 220px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 1rem;
+            color: white;
+            font-size: 3rem;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        /* 各景點獨特色彩背景 */
+        .img-taipei101 {
+            background: linear-gradient(120deg, #2b5e3b, #6e9f5e), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiIHdpZHRoPSI4MHB4IiBoZWlnaHQ9IjgwcHgiPjxwYXRoIGQ9Ik0xMiAyTDIgN3YxMGwxMCA1IDEwLTVWN0wxMiAyem0wIDRsOCA0LTggNC04LTR6Ii8+PC9zdmc+');
+            background-blend-mode: overlay;
+            background-size: cover, 60px;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center, 95% 90%;
+        }
+        .img-chiangkai {
+            background: linear-gradient(120deg, #b87333, #e0a56b), repeating-linear-gradient(45deg, rgba(255,215,0,0.1) 0px, rgba(255,215,0,0.1) 2px, transparent 2px, transparent 8px);
+            background-blend-mode: overlay;
+        }
+        .img-ximen {
+            background: linear-gradient(130deg, #c44569, #e77f67), radial-gradient(circle at 10% 30%, rgba(255,255,200,0.2) 2%, transparent 2.5%);
+            background-size: cover, 20px 20px;
+        }
+        .card-img span {
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            border-left: 6px solid #ff8c42;
+            padding-left: 0.8rem;
+        }
+
+        .location-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            margin-bottom: 1.2rem;
+            color: #3e3e3e;
+        }
+
+        .info-list {
+            list-style: none;
+            margin: 1rem 0;
+            background: #f8f3e9;
+            padding: 0.8rem 1rem;
+            border-radius: 24px;
+        }
+        .info-list li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .btn-mock {
+            background: #ff8c42;
+            border: none;
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            width: fit-content;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: auto;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        .btn-mock:hover {
+            background: #e56e1a;
+        }
+
+        /* 額外景點小知識區塊 */
+        .fun-facts {
+            background: #e9f0f5;
+            border-radius: 40px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .fun-facts h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #1f4e6e;
+        }
+        .facts-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .fact-item {
+            background: white;
+            border-radius: 28px;
+            padding: 1rem 1.2rem;
+            width: 200px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+        .fact-item i {
+            font-size: 2rem;
+            display: block;
+        }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid #ddd8ce;
+            color: #5f5b55;
+            font-size: 0.85rem;
+        }
+
+        /* 響應式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .card-title {
+                font-size: 1.5rem;
+            }
+            .container {
+                padding: 0 1rem 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .spots-grid {
+                gap: 1.2rem;
+            }
+            .fun-facts h3 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <h1>🇹🇼 探索·台灣經典</h1>
+    <p>城市與記憶交織 — 三大必訪景點<br>台北101、中正紀念堂、西門町</p>
+    <small>🌏 台北城市美學 | 歷史底蘊 | 潮流文化 </small>
+</section>
+
+<div class="container">
+    <div class="spots-grid">
+        
+        <!-- 1. 台北101卡片 -->
+        <div class="card">
+            <div class="card-img img-taipei101">
+                <span>🏙️ 摩天雲端</span>
+            </div>
+            <div class="card-content">
+                <div class="card-title">台北101</div>
+                <div class="location-icon">📍 信義區 · 台北地標</div>
+                <p class="description">
+                    曾為世界第一高樓，融合竹節與斗笠造型，象徵節節高升。觀景台可360度俯瞰大台北盆地，擁有世界最快電梯。
+                </p>
+                <ul class="info-list">
+                    <li>✨ 樓高：508公尺 / 地上101層</li>
+                    <li>🎡 特色：世界最高綠建築、跨年煙火秀</li>
+                    <li>🚇 捷運：台北101/世貿站 出口直達</li>
+                    <li>🕰️ 觀景台：9:00~22:00 (彈性調整)</li>
+                </ul>
+                <a href="#" class="btn-mock" onclick="alert('🌟 台北101：不僅是購物中心，更是台灣科技的驕傲！歡迎親臨感受。')">探索更多 ➜</a>
+            </div>
+        </div>
+        
+        <!-- 2. 中正紀念堂卡片 -->
+        <div class="card">
+            <div class="card-img img-chiangkai">
+                <span>🏛️ 莊嚴殿堂</span>
+            </div>
+            <div class="card-content">
+                <div class="card-title">中正紀念堂</div>
+                <div class="location-icon">📍 中正區 · 自由廣場</div>
+                <p class="description">
+                    白色宮殿式建築搭配寶藍色琉璃瓦，雄偉牌樓「自由廣場」矗立。擁有豐富的歷史展覽，也是民眾休閒與藝文活動的重要場域。
+                </p>
+                <ul class="info-list">
+                    <li>🏛️ 建築風格：仿明清天壇頂部、八角形</li>
+                    <li>🎭 周邊：國家兩廳院 (音樂廳＆戲劇院)</li>
+                    <li>🕊️ 衛兵交接：每整點一次，儀式莊重</li>
+                    <li>🚇 捷運：中正紀念堂站 5號出口</li>
+                </ul>
+                <a href="#" class="btn-mock" onclick="alert('🏛️ 中正紀念堂：感受歷史與藝術的交融，自由廣場寬闊的視野令人心曠神怡！')">探索更多 ➜</a>
+            </div>
+        </div>
+        
+        <!-- 3. 西門町卡片 -->
+        <div class="card">
+            <div class="card-img img-ximen">
+                <span>🎤 青春潮流</span>
+            </div>
+            <div class="card-content">
+                <div class="card-title">西門町</div>
+                <div class="location-icon">📍 萬華區 · 西門徒步區</div>
+                <p class="description">
+                    台北最具年輕活力的商圈，電影街、塗鴉牆、流行服飾與特色小吃。西門紅樓為百年古蹟，日夜皆充滿流行文化能量。
+                </p>
+                <ul class="info-list">
+                    <li>🎬 電影街：台灣電影首映與影展重鎮</li>
+                    <li>🍢 必吃：阿宗麵線、烤麻糬、老天祿滷味</li>
+                    <li>🎨 創意市集與街頭藝人，越夜越精彩</li>
+                    <li>🚇 捷運：西門站 6號出口即達徒步區</li>
+                </ul>
+ 
